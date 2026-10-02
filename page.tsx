@@ -1,0 +1,3 @@
+import BookingForm from '../../../components/BookingForm';
+import {supabase} from '../../../lib/supabase';
+export default async function Page({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const db=supabase();const {data:artist}=await db.from('artists').select('*').eq('slug',slug).single();if(!artist)return <main className="wrap"><div className="card">Artist not found.</div></main>;return <main className="wrap"><div className="card"><div className="muted">{artist.handle||artist.slug}</div><h1>Book with {artist.display_name}</h1><p>{artist.bio||'Submit your tattoo idea for review.'}</p></div><BookingForm artist={artist}/></main>}
